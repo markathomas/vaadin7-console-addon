@@ -497,6 +497,8 @@ public class TextConsole extends FocusWidget {
         beforeChangeTerminal();
         if (string == null)
             string = "";
+        if (string.equals("") && input.getValue().equals(""))
+            return;
         if (isPromptActive()) {
             setPromtActive(false);
             if (!bufferIsEmpty() && !bufferEndsWithNewLine()) {
