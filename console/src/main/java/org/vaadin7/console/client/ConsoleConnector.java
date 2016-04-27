@@ -4,7 +4,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.FocusEvent;
 import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.user.client.ui.Widget;
-import com.vaadin.client.annotations.OnStateChange;
 import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractComponentConnector;
@@ -105,12 +104,10 @@ public class ConsoleConnector extends AbstractComponentConnector implements Focu
 
             @Override
             public void newLine() {
-                getWidget().newLine();
             }
 
             @Override
             public void newLineIfNotEndsWithNewLine() {
-                getWidget().newLineIfNotEndsWithNewLine();
             }
 
             @Override
@@ -181,18 +178,16 @@ public class ConsoleConnector extends AbstractComponentConnector implements Focu
         super.onStateChanged(stateChangeEvent);
         ConsoleWidget widget = getWidget();
         if (!getState().ps.equals(widget.getConfig().getPs()))
-            widget.setPs(getState().ps);
+            widget.setPromptTxt(getState().ps);
         if (getState().maxBufferSize != widget.getConfig().getMaxBufferSize()) {
             widget.getConfig().setMaxBufferSize(getState().maxBufferSize);
             widget.setMaxBufferSize(getState().maxBufferSize);
         }
         if (getState().cols != widget.getConfig().getCols()) {
             widget.getConfig().setCols(getState().cols);
-            widget.setCols(getState().cols);
         }
         if (getState().rows != widget.getConfig().getRows()) {
             widget.getConfig().setRows(getState().rows);
-            widget.setRows(getState().rows);
         }
         if (getState().wrap != widget.getConfig().isWrap())
             widget.getConfig().setWrap(getState().wrap);
@@ -218,18 +213,6 @@ public class ConsoleConnector extends AbstractComponentConnector implements Focu
 
     public void notifyPaintableSizeChange() {
         getLayoutManager().setNeedsMeasure(this);
-    }
-
-    @OnStateChange("width")
-    void widthChanged() {
-        // GWT.log("widthChanged to " + getState().width);
-        getWidget().setWidth(getState().width);
-    }
-
-    @OnStateChange("height")
-    void heightChanged() {
-        // GWT.log("heightChanged to " + getState().height);
-        getWidget().setHeight(getState().height);
     }
 
     @Override
